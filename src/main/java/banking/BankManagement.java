@@ -52,24 +52,24 @@ class BankManagement{
    //                               CREATE ACCOUNT
    public static void createAccount() throws Exception{
 
-       System.out.println("Enter Name: ");
-       String name = sc.nextLine();
-       System.out.println("Enter Password: ");
-       int pass = sc.nextInt();
+      System.out.println("Enter Name: ");
+      String name = sc.nextLine();
+      System.out.println("Enter Password: ");
+      int pass = sc.nextInt();
 
-       if(con != null){
+      if(con != null){
          System.out.println("DATABASE CONNECtion SUCCESSFULL...");
-         }
-       String query = "INSERT INTO CUSTOMER(cname, balance, pass_code) VALUES(?,1000,?)";
+      }
+      String query = "INSERT INTO CUSTOMER(cname, balance, pass_code) VALUES(?,1000,?)";
 
-       PreparedStatement pst = con.prepareStatement(query);
+      PreparedStatement pst = con.prepareStatement(query);
 
-       pst.setString(1,name);
-       pst.setInt(2,pass);
-       int row = pst.executeUpdate();
-       System.out.println(row+" user created successfully...\n");
+      pst.setString(1,name);
+      pst.setInt(2,pass);
+      int row = pst.executeUpdate();
+      System.out.println(row+" user created successfully...\n");
 
-       pst.close();
+      pst.close();
    }
    //                            LOGIN ACCOUNT
    public static void loginAccount()throws Exception {
@@ -108,19 +108,22 @@ class BankManagement{
          }
          case 3 -> BankManagement.viewBalance(name);
          case 4 -> {
-               System.out.println("Enter new Pass Code: ");
-               int new_pass = sc.nextInt();
-               String updateQuery = "UPDATE customer set pass_code = ? where cname = ? ";
+            System.out.println("Enter new Pass Code: ");
+            int new_pass = sc.nextInt();
+            String updateQuery = "UPDATE customer set pass_code = ? where cname = ? ";
             PreparedStatement pst4 = con.prepareStatement(updateQuery);
 
             pst4.setInt(1, new_pass);
             pst4.setString(2, name);
 
-               int row = pst4.executeUpdate();
+            int row = pst4.executeUpdate();
             System.out.println("Pass Code Update Successfull for "+name);
             pst.close();
+         }
+         default -> {
+            System.out.println("Invalid choice!");
+         }
       }
-   }
       con.close();
    }
 }
